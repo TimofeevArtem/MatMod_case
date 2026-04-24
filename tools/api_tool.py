@@ -1,8 +1,8 @@
 import requests
 import xml.etree.ElementTree as ET
-from time import sleep as delay
 from datetime import datetime
 from typing import Optional
+import plotext as plt
 
 def get_internal_currency_code(currency_code: str) -> Optional[str]:
     """
@@ -141,4 +141,26 @@ def get_currency_rate(currency: str, date: Optional[str] = None) -> dict:
     
     return {}
 
-# print(get_currency_rate("USD"))
+def show_graph(currency: str, start_date: str, end_date: str):
+    information = get_historical_information(currency, start_date, end_date)
+    
+    dates = [item['date'].strftime('%d/%m/%Y') for item in information]
+    rates = [item['rate'] for item in information]
+    
+    plt.plot(dates, rates)
+    plt.title(f'Курс {currency} к рублю')
+    plt.xlabel('Дата')
+    plt.ylabel(f'Курс {currency}/RUB')
+    plt.show()
+    return {
+        "currency": currency,
+        "period": {"start": start_date, "end": end_date},
+        "statistics": {
+            "min": min(rates),
+            "max": max(rates),
+            "avg": sum(rates) / len(rates),
+            "points_count": len(rates)
+        },
+        "first_date": dates[0],
+        "last_date": dates[-1]
+    }

@@ -2,3 +2,4 @@ groq
 python-dotenv
 requests
 pyyaml
+plotext
