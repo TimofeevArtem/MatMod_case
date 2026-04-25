@@ -65,7 +65,7 @@ llm:
   model_id: "llama-3.3-70b-versatile"
   api_base: "https://api.groq.com/openai/v1"
   temperature: 0.0
-  max_tokens: 256
+  max_tokens: 1024
 
 logging:
   enabled: true

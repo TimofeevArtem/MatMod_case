@@ -30,8 +30,8 @@ def get_internal_currency_code(currency_code: str) -> Optional[str]:
                     if internal_id:
                         return internal_id
     except Exception as e:
-        pass
-
+        print(f"Ошибка при получении внутреннего кода {currency_code}: {e}")
+    
     return None
 
 def get_historical_information(currency: str, start_date: str, end_date: str) -> list:
@@ -56,7 +56,7 @@ def get_historical_information(currency: str, start_date: str, end_date: str) ->
         }]
     internal_code = get_internal_currency_code(currency)
     if not internal_code:
-        pass
+        print(f"Не удалось найти внутренний код для валюты {currency}")
         return []
 
     url = "http://www.cbr.ru/scripts/XML_dynamic.asp"
@@ -98,6 +98,7 @@ def get_historical_information(currency: str, start_date: str, end_date: str) ->
             return []
             
     except Exception as e:
+        print(f"Ошибка при получении исторической информации: {e}")
         return []
 
 def get_currency_rate(currency: str, date: Optional[str] = None) -> dict:
@@ -136,7 +137,7 @@ def get_currency_rate(currency: str, date: Optional[str] = None) -> dict:
                             'date': current_date
                         }
     except Exception as e:
-        pass
+        print(f"Ошибка при получении курса {currency}: {e}")
     
     return {}
 
